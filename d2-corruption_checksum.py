@@ -1,7 +1,7 @@
 #d2-corruption_checksum
 
-from helpers import read_input
-d2 = read_input('d2-input.txt')
+from numpy import loadtxt
+d2 = loadtxt('d2-input.txt', dtype = int)
 
 from itertools import combinations
 
@@ -13,7 +13,7 @@ def divisible(pair):
     
 def row_divide(row):
     k = list(tuple(filter(divisible, combinations(row, 2)))[0])
-    k.sort()
+    k.sort() #list of the two elements which satisfies divisibility condition
     return k[1]//k[0]
 
 def checksum(data, fn):
