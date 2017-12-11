@@ -31,9 +31,8 @@ def count_jumps_5b():
             index += update(d5_b, index, 1)
     return count
 
-#takes a very long time to run
 #advent_5a = count_jumps_5a()
-advent_5b = count_jumps_5b()
+advent_5b = count_jumps_5b()        #takes a very long time to run, to be optimised
 #print(advent_5a, advent_5b)
 
         
