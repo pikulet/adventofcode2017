@@ -11,11 +11,11 @@ class Node():
         self.name = name
         self.weight = weight
         self.children = list(map(lambda child_name: child_name.strip(','), children))
-        self.children_weights = ()
+        self.children_weights = ()          #tuple of weights of children
         self.parent = None
 
     def get_children_weight(self):
-        if not self.children_weights:       #a little optimisation achieved when reused later
+        if not self.children_weights and self.children:       #a little optimisation achieved when reused later
             self.children_weights = tuple(map(lambda child: nodes[child].get_weight(), self.children))  
         return sum(self.children_weights)
 
@@ -28,7 +28,7 @@ class Node():
         return True
     
 def process_data():
-    #convert data to dict[name] = Node
+    #convert data to dict[name] = Node object
 
     #add name, weight, children
     for node in d7:
@@ -37,14 +37,10 @@ def process_data():
         node_weight = int(node[1].strip('()'))
         nodes[node_name] = Node(node_name, node_weight, *node[3:])
     
-    #add parent, set children weight
+    #add parent
     for node_name, node_info in nodes.items():
-        
-        try:
-            for child_name in node_info.children:
-                nodes[child_name].parent = node_name
-        except IndexError:
-            pass
+        for child_name in node_info.children:
+            nodes[child_name].parent = node_name
 
 process_data()
 
@@ -56,9 +52,8 @@ def find_root_parent():
 
     return r.name
 
-#advent_7a = find_root_parent()
-#root_parent = nodes[advent_7a]
-root_parent = nodes['ahnofa']               #already solved
+advent_7a = find_root_parent()
+root_parent = nodes[advent_7a]
     
 def find_bad_child(node):
 
@@ -91,4 +86,4 @@ def find_unbalanced_weight():
 
 advent_7b = find_unbalanced_weight()
 
-#print (advent_7a, advent_7b)
+print (advent_7a, advent_7b)
